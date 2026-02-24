@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎂</title>
+<style>
+  body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    color: white;
+    margin-top: 100px;
+  }
+  button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    color: #ff4b5c;
+  }
+  #message {
+    margin-top: 30px;
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🎂 สุขสันต์วันเกิด! 🎉</h1>
+<p>กดปุ่มเพื่อรับคำอวยพรลับ 👇</p>
+
+<button onclick="showMessage()">กดเลย!</button>
+
+<div id="message"></div>
+
+<script>
+function showMessage() {
+  const messages = [
+    "ขอให้ปีนี้เงินเข้ารัว ๆ 💸",
+    "สุขภาพแข็งแรง ไม่มีบัคในชีวิต 🚀",
+    "สมหวังทุกเรื่อง ยกเว้นเรื่องแก่ 😂",
+    "ขอให้สวยขึ้น 300% ✨",
+    "ปีนี้ต้องปัง! ไม่ปังให้มันรู้ไป 🔥"
+  ];
+  
+  const random = Math.floor(Math.random() * messages.length);
+  document.getElementById("message").innerHTML = messages[random];
+}
+</script>
+
+</body>
+</html>
