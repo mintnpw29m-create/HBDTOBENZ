@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>เกมจับของขวัญ 🎁</title>
+<title>เกมจับของขวัญ 🎮</title>
 
 <style>
 body {
@@ -14,9 +14,7 @@ body {
     overflow: hidden;
 }
 
-h1 {
-    margin-top: 20px;
-}
+h1 { margin-top: 20px; }
 
 #gameArea {
     position: relative;
@@ -55,17 +53,18 @@ button {
 }
 
 #message {
-    font-size: 22px;
-    margin-top: 15px;
+    font-size: 20px;
+    margin-top: 20px;
     color: #c2185b;
     min-height: 40px;
+    padding: 0 20px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎮 เกมจับของขวัญ (คลิกให้ทัน!)</h1>
+<h1>🎮 เกมจับของขวัญ</h1>
 
 <button onclick="startGame()">เริ่มเกม</button>
 
@@ -85,13 +84,15 @@ let gameStarted = false;
 let moveInterval;
 let timerInterval;
 
+const WIN_SCORE = 10;
+
 const wishes = [
-    "สุขสันต์วันเกิดนะน้อนเบนซ์ 🎂",
+    "สุขสันต์วันเกิดนะเบนซ์ 🎂",
     "ขอให้ปีนี้เป็นปีที่ดีที่สุด 💖",
     "รวย ๆ เฮง ๆ เงินเข้ารัว ๆ 💸",
     "เหนื่อยน้อยลง ยิ้มมากขึ้น 😊",
     "อยู่เป็นเพื่อนกันแบบนี้ไปนาน ๆ 🤍",
-    "ความสุขล้น ๆ ทั้งปีเลย ✨"
+    "ขอให้ความสุขล้น ๆ ทั้งปี ✨"
 ];
 
 const gift = document.getElementById("gift");
@@ -106,7 +107,7 @@ function startGame() {
 
     document.getElementById("score").innerText = "คะแนน: " + score;
     document.getElementById("timer").innerText = "เวลา: " + timeLeft;
-    document.getElementById("message").innerText = "";
+    document.getElementById("message").innerHTML = "";
 
     moveGift();
     moveInterval = setInterval(moveGift, 1000);
@@ -138,9 +139,6 @@ function catchGift() {
     score++;
     document.getElementById("score").innerText = "คะแนน: " + score;
 
-    const randomIndex = Math.floor(Math.random() * wishes.length);
-    document.getElementById("message").innerText = wishes[randomIndex];
-
     moveGift();
 }
 
@@ -149,8 +147,19 @@ function endGame() {
     clearInterval(moveInterval);
     clearInterval(timerInterval);
 
-    document.getElementById("message").innerText =
-        "⏰ หมดเวลา! ได้ " + score + " คะแนน 🎉";
+    if (score >= WIN_SCORE) {
+
+        let allWishes = "<h2>🏆 ชนะแล้ว!</h2>";
+        wishes.forEach(wish => {
+            allWishes += "<p>" + wish + "</p>";
+        });
+
+        document.getElementById("message").innerHTML = allWishes;
+
+    } else {
+        document.getElementById("message").innerText =
+            "😢 ยังไม่ถึง " + WIN_SCORE + " คะแนน ลองใหม่อีกครั้ง!";
+    }
 }
 </script>
 
