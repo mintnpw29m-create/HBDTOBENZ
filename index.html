@@ -1,93 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Game 🎮</title>
+<title>เกมจับของขวัญ 🎁</title>
+
 <style>
-  body {
+body {
+    margin: 0;
+    font-family: sans-serif;
     text-align: center;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    background: linear-gradient(135deg, #ff9ec4, #ffd6e8);
     overflow: hidden;
-  }
-  h1 { color: white; }
-
-  #gameArea {
-    position: relative;
-    width: 100%;
-    height: 70vh;
-  }
-
-  #gift {
-  position: absolute;
-  font-size: 100px;     
-  width: 100px;        
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }
 
-  #score {
-    font-size: 20px;
-    color: white;
-  }
+h1 {
+    margin-top: 20px;
+}
 
-  button {
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 10px;
-    border: none;
+#gameArea {
+    position: relative;
+    width: 100vw;
+    height: 60vh;
+    border: 3px dashed white;
+    margin-top: 20px;
+}
+
+#gift {
+    position: absolute;
+    font-size: 100px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-  }
+    user-select: none;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    background: #ff4da6;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#score, #timer {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+#message {
+    font-size: 22px;
+    margin-top: 15px;
+    color: #c2185b;
+    min-height: 40px;
+}
 </style>
 </head>
+
 <body>
 
-<h1>🎂 Catch the Gift! 🎁</h1>
-<p id="score">Score: 0</p>
-<button onclick="startGame()">Start Game</button>
+<h1>🎮 เกมจับของขวัญ (คลิกให้ทัน!)</h1>
+
+<button onclick="startGame()">เริ่มเกม</button>
+
+<div id="score">คะแนน: 0</div>
+<div id="timer">เวลา: 15</div>
 
 <div id="gameArea">
-  <div id="gift">🎁</div>
+    <div id="gift" onclick="catchGift()">🎁</div>
 </div>
+
+<div id="message"></div>
 
 <script>
 let score = 0;
-let gameInterval;
+let timeLeft = 15;
+let gameStarted = false;
+let moveInterval;
+let timerInterval;
+
+const wishes = [
+    "สุขสันต์วันเกิดนะน้อนเบนซ์ 🎂",
+    "ขอให้ปีนี้เป็นปีที่ดีที่สุด 💖",
+    "รวย ๆ เฮง ๆ เงินเข้ารัว ๆ 💸",
+    "เหนื่อยน้อยลง ยิ้มมากขึ้น 😊",
+    "อยู่เป็นเพื่อนกันแบบนี้ไปนาน ๆ 🤍",
+    "ความสุขล้น ๆ ทั้งปีเลย ✨"
+];
+
+const gift = document.getElementById("gift");
+const gameArea = document.getElementById("gameArea");
 
 function startGame() {
-  score = 0;
-  document.getElementById("score").innerText = "Score: 0";
-  moveGift();
-  gameInterval = setInterval(moveGift, 800);
+    if (gameStarted) return;
+
+    gameStarted = true;
+    score = 0;
+    timeLeft = 15;
+
+    document.getElementById("score").innerText = "คะแนน: " + score;
+    document.getElementById("timer").innerText = "เวลา: " + timeLeft;
+    document.getElementById("message").innerText = "";
+
+    moveGift();
+    moveInterval = setInterval(moveGift, 1000);
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").innerText = "เวลา: " + timeLeft;
+
+        if (timeLeft <= 0) {
+            endGame();
+        }
+    }, 1000);
 }
 
 function moveGift() {
-  const gift = document.getElementById("gift");
-  const gameArea = document.getElementById("gameArea");
+    const maxX = gameArea.clientWidth - 120;
+    const maxY = gameArea.clientHeight - 120;
 
-  const maxX = gameArea.clientWidth - 50;
-  const maxY = gameArea.clientHeight - 50;
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
 
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
-
-  gift.style.left = randomX + "px";
-  gift.style.top = randomY + "px";
+    gift.style.left = randomX + "px";
+    gift.style.top = randomY + "px";
 }
 
-document.getElementById("gift").addEventListener("click", function() {
-  score++;
-  document.getElementById("score").innerText = "Score: " + score;
+function catchGift() {
+    if (!gameStarted) return;
 
-  if (score >= 10) {
-    clearInterval(gameInterval);
-    alert("🎉 Happy Birthday To Benz! ขอให้มีความสุขมากๆ สุขภาพร่างกายแข็งแรง ขอให้ปีนี้สวยขึ้นจนเพื่อนหมั่นไส้ ขอให้เหนื่อยน้อยลง ยิ้มมากขึ้น และเงินเพิ่มขึ้น 🎂");
-  }
-});
+    score++;
+    document.getElementById("score").innerText = "คะแนน: " + score;
+
+    const randomIndex = Math.floor(Math.random() * wishes.length);
+    document.getElementById("message").innerText = wishes[randomIndex];
+
+    moveGift();
+}
+
+function endGame() {
+    gameStarted = false;
+    clearInterval(moveInterval);
+    clearInterval(timerInterval);
+
+    document.getElementById("message").innerText =
+        "⏰ หมดเวลา! ได้ " + score + " คะแนน 🎉";
+}
 </script>
 
 </body>
