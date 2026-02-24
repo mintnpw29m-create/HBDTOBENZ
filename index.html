@@ -1,53 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday 🎂</title>
+<title>เกมจับของขวัญ 🎁</title>
 <style>
-  body {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
-    color: white;
-    margin-top: 100px;
-  }
-  button {
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: white;
-    color: #ff4b5c;
-  }
-  #message {
-    margin-top: 30px;
-    font-size: 22px;
-  }
+    body {
+        font-family: sans-serif;
+        text-align: center;
+        background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+        padding-top: 50px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .gift-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .gift {
+        font-size: 60px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .gift:hover {
+        transform: scale(1.2);
+    }
+
+    #message {
+        margin-top: 40px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #d63384;
+        min-height: 50px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        background-color: #ff69b4;
+        color: white;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
 
-<h1>🎂 สุขสันต์วันเกิด! 🎉</h1>
-<p>กดปุ่มเพื่อรับคำอวยพรลับ 👇</p>
+<h1>🎉 เลือกของขวัญ 1 กล่อง 🎁</h1>
 
-<button onclick="showMessage()">กดเลย!</button>
+<div class="gift-container">
+    <div class="gift" onclick="openGift()">🎁</div>
+    <div class="gift" onclick="openGift()">🎁</div>
+    <div class="gift" onclick="openGift()">🎁</div>
+</div>
 
 <div id="message"></div>
 
+<button onclick="resetGame()">เล่นอีกครั้ง</button>
+
 <script>
-function showMessage() {
-  const messages = [
-    "ขอให้ปีนี้เงินเข้ารัว ๆ 💸",
-    "สุขภาพแข็งแรง ไม่มีบัคในชีวิต 🚀",
-    "สมหวังทุกเรื่อง ยกเว้นเรื่องแก่ 😂",
-    "ขอให้สวยขึ้น 300% ✨",
-    "ปีนี้ต้องปัง! ไม่ปังให้มันรู้ไป 🔥"
-  ];
-  
-  const random = Math.floor(Math.random() * messages.length);
-  document.getElementById("message").innerHTML = messages[random];
-}
+    const wishes = [
+        "สุขสันต์วันเกิด 🎂 ขอให้มีความสุขมากๆ",
+        "ขอให้รวย ๆ เฮง ๆ 💰✨",
+        "สุขภาพแข็งแรง สมหวังทุกอย่าง 💖",
+        "ขอให้ความรักสดใสตลอดปี 💕",
+        "ขอให้ปีนี้เป็นปีที่ดีที่สุด 🎉"
+    ];
+
+    function openGift() {
+        const randomIndex = Math.floor(Math.random() * wishes.length);
+        document.getElementById("message").innerText = wishes[randomIndex];
+    }
+
+    function resetGame() {
+        document.getElementById("message").innerText = "";
+    }
 </script>
 
 </body>
